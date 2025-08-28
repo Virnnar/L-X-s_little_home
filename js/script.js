@@ -1,10 +1,11 @@
 // 配置对象：定义所有需要加载的章节
 const sectionsConfig = [
-    { id: 'home', path: 'sections/home.html' },
-    { id: 'story', path: 'sections/story.html' },
-    { id: 'gallery', path: 'sections/gallery.html' },
-    { id: 'message', path: 'sections/message.html' }
+    { id: 'home', path: '/sections/home.html' },
+    { id: 'story', path: '/sections/story.html' },
+    { id: 'gallery', path: '/sections/gallery.html' },
+    { id: 'message', path: '/sections/message.html' }
 ];
+
 
 // 加载单个章节的函数
 async function loadSection(sectionId, filePath) {
