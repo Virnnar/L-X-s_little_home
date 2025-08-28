@@ -1,11 +1,14 @@
-// 配置对象：定义所有需要加载的章节
-const sectionsConfig = [
-    { id: 'home', path: './sections/home.html' },
-    { id: 'story', path: './sections/story.html' },
-    { id: 'gallery', path: './sections/gallery.html' },
-    { id: 'message', path: './sections/message.html' }
-];
+// 自动获取仓库路径前缀
+const repoPath = window.location.pathname.includes('/L-X-s_little_home')
+    ? '/L-X-s_little_home'
+    : '';
 
+const sectionsConfig = [
+    { id: 'home', path: `${repoPath}/sections/home.html` },
+    { id: 'story', path: `${repoPath}/sections/story.html` },
+    { id: 'gallery', path: `${repoPath}/sections/gallery.html` },
+    { id: 'message', path: `${repoPath}/sections/message.html` }
+];
 
 // 加载单个章节的函数
 async function loadSection(sectionId, filePath) {
