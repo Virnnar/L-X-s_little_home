@@ -1,15 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>L&X</title>
-    <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; }
-        h1 { color: pink; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我们的故事 | 张三 & 李四</title>
+    <!-- 引入外部CSS文件 -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>welcome！</h1>
-    <p>❤️</p>
-    <img src="your-photo.jpg" alt="Ours.jpg" width="300">
+    <!-- 导航栏 -->
+    <nav id="navbar">
+        <ul>
+            <li><a href="#home" class="active">首页</a></li>
+            <li><a href="#story">故事</a></li>
+            <li><a href="#gallery">相册</a></li>
+            <li><a href="#message">留言</a></li>
+        </ul>
+    </nav>
+
+    <!-- 章节容器 - 内容将由JavaScript动态加载 -->
+    <section id="home"><!-- 首页内容将在这里加载 --></section>
+    <section id="story"><!-- 故事内容将在这里加载 --></section>
+    <section id="gallery"><!-- 相册内容将在这里加载 --></section>
+    <section id="message"><!-- 留言内容将在这里加载 --></section>
+
+    <!-- 在页面底部引入JavaScript文件 -->
+    <script src="js/script.js"></script>
 </body>
 </html>
