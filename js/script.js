@@ -10,18 +10,15 @@ const sectionsConfig = [
     { id: 'message', path: `${repoPath}/sections/message.html` }
 ];
 
-// 加载单个章节的函数
+// 加载章节内容
 async function loadSection(sectionId, filePath) {
     try {
         const response = await fetch(filePath);
-        if (!response.ok) {
-            throw new Error(`无法加载 ${filePath}: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`无法加载 ${filePath}`);
         const html = await response.text();
         document.getElementById(sectionId).innerHTML = html;
-        console.log(`✅ 已加载: ${sectionId}`);
     } catch (error) {
-        console.error('❌ 加载章节失败:', error);
+        console.error('加载章节失败:', error);
         document.getElementById(sectionId).innerHTML = `
             <div class="container">
                 <h2>加载失败</h2>
@@ -31,57 +28,109 @@ async function loadSection(sectionId, filePath) {
     }
 }
 
-// 加载所有章节
-async function loadAllSections() {
-    console.log('🚀 开始加载所有章节...');
-    
-    // 使用 Promise.all 并行加载所有章节
-    const loadPromises = sectionsConfig.map(section => 
-        loadSection(section.id, section.path)
-    );
-    
-    await Promise.all(loadPromises);
-    console.log('🎉 所有章节加载完成！');
-    
-    // 所有内容加载完成后，初始化滚动监听
-    initScrollListener();
-}
-
-// 初始化滚动监听
-function initScrollListener() {
-    window.addEventListener('scroll', function() {
-        let sections = document.querySelectorAll('section');
-        let navLinks = document.querySelectorAll('#navbar a');
+// 初始化Swiper
+function initSwiper() {
+    const swiper = new Swiper('.swiper', {
+        // 启用鼠标滚轮控制
+        mousewheel: true,
         
-        let currentSection = '';
+        // 启用键盘控制
+        keyboard: {
+            enabled: true,
+        },
         
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if(pageYOffset >= (sectionTop - sectionHeight / 3)) {
-                currentSection = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if(link.getAttribute('href').substring(1) === currentSection) {
-                link.classList.add('active');
-            }
-        });
+        // 分页指示器
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        
+        // 导航按钮
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        
+        // 方向：垂直滑动
+        direction: 'vertical',
+        
+        // 滑动速度
+        speed: 800,
+        
+        // 循环模式（可选）
+        loop: false,
+        
+        // 滑动效果
+        effect: 'slide',
+        
+        // 触摸灵敏度
+        touchRatio: 1,
+        
+        // 滑动阻力
+        resistanceRatio: 0.85,
+        
+        // 滑动到下一个幻灯片所需的最小距离
+        threshold: 10,
+        
+        // 当滑动到边缘时禁止继续滑动
+        preventInteractionOnTransition: true,
+        
+        // 初始化回调
+        on: {
+            init: function() {
+                console.log('Swiper初始化完成！');
+            },
+        }
     });
+    
+    return swiper;
 }
 
-// 图片模态框功能
+// 主初始化函数
+async function initializeApp() {
+    console.log('🚀 开始加载应用...');
+    
+    try {
+        // 并行加载所有章节
+        const loadPromises = sectionsConfig.map(section => 
+            loadSection(section.id, section.path)
+        );
+        
+        await Promise.all(loadPromises);
+        console.log('✅ 所有章节加载完成');
+        
+        // 初始化Swiper
+        const swiper = initSwiper();
+        console.log('🎉 Swiper初始化完成');
+        
+        // 添加键盘快捷键提示
+        console.log('💡 使用键盘上下键或鼠标滚轮切换页面');
+        
+    } catch (error) {
+        console.error('应用初始化失败:', error);
+    }
+}
+
+// 页面加载完成后初始化
+document.addEventListener('DOMContentLoaded', function() {
+    initializeApp();
+});
+
+// 图片模态框功能（保持原有功能）
 function openModal(img) {
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImage');
-    modal.style.display = 'block';
-    modalImg.src = img.src;
+    if (modal && modalImg) {
+        modal.style.display = 'block';
+        modalImg.src = img.src;
+    }
 }
 
 function closeModal() {
-    document.getElementById('imageModal').style.display = 'none';
+    const modal = document.getElementById('imageModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
 
 // 点击模态框外部关闭
@@ -91,13 +140,3 @@ window.onclick = function(event) {
         closeModal();
     }
 }
-
-// 页面加载完成后开始加载所有章节
-document.addEventListener('DOMContentLoaded', function() {
-    loadAllSections();
-});
-
-// 添加错误处理
-window.addEventListener('error', function(e) {
-    console.error('全局错误:', e.error);
-});
