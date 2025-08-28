@@ -1,3 +1,135 @@
+/* 基础重置样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    scroll-behavior: smooth; /* 实现平滑滚动 */
+    overflow-x: hidden; /* 隐藏横向滚动条 */
+}
+
+/* 左侧导航菜单 */
+#navbar {
+    position: fixed; /* 固定位置 */
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%); /* 垂直居中 */
+    z-index: 1000; /* 确保在最上层 */
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px 10px;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#navbar ul {
+    list-style: none;
+}
+
+#navbar li {
+    margin: 15px 0;
+    text-align: center;
+}
+
+#navbar a {
+    text-decoration: none;
+    color: #e84393;
+    font-weight: bold;
+    display: block;
+    padding: 10px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+#navbar a:hover,
+#navbar a.active {
+    background-color: #e84393;
+    color: white;
+}
+
+/* 每个章节的通用样式 */
+section {
+    height: 100vh; /* 每个章节占满整个视口高度 */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.container {
+    max-width: 800px;
+}
+
+/* 为每个章节设置不同的背景色 */
+#home { background: linear-gradient(135deg, #f5c3e6 0%, #b19cd9 100%); }
+#story { background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); }
+#gallery { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+#message { background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); }
+
+/* 章节内容样式 */
+h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #444;
+}
+
+p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 25px;
+    color: #555;
+}
+
+.love-photo {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 15px;
+    margin: 30px 0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* 照片墙网格布局 */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 30px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* 保持图片比例并填充容器 */
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.05);
+}
+
+/* 响应式设计：在小屏幕上隐藏导航栏 */
+@media (max-width: 768px) {
+    #navbar {
+        display: none;
+    }
+}
+
 /* 在原有CSS的末尾添加以下样式 */
 
 /* 留言板样式 */
