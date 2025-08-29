@@ -1,7 +1,362 @@
 <div class="container">
-    <h2>我们的故事</h2>
-    <p>那一天，阳光很好，我遇见了你。从未想过，那一眼便是万年。</p>
-    <p>我们一起走过了春夏秋冬，看过了无数风景，但最美的风景，永远是身边的你。</p>
-    <img class="love-photo" src="./images/photo2.jpg" alt="我们的故事">
-    <p>未来的路还很长，请多指教。</p>
+    <!-- 主标题 -->
+    <div class="story-header">
+        <h1>💖 我们的爱情时钟</h1>
+        <p>从2021年8月18日开始的美好旅程</p>
+    </div>
+
+    <!-- 实时恋爱计时器 -->
+    <div class="love-timer">
+        <div class="timer-main">
+            <div class="timer-big">
+                <span id="love-years">4</span>年
+                <span id="love-months">0</span>月
+                <span id="love-days">11</span>天
+            </div>
+            <div class="timer-small">
+                <span id="love-hours">00</span>:<span id="love-minutes">00</span>:<span id="love-seconds">00</span>
+            </div>
+        </div>
+        <div class="total-days">
+            已经一起走过了 <span id="total-days">1476</span> 个日夜
+        </div>
+    </div>
+
+    <!-- 简洁时间线 -->
+    <div class="simple-timeline">
+        <div class="timeline-item">
+            <span class="timeline-date">2021.08.18</span>
+            <span class="timeline-dot">●</span>
+            <span class="timeline-text">我们在一起</span>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-date">2022.08.18</span>
+            <span class="timeline-dot">●</span>
+            <span class="timeline-text">一周年</span>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-date">2023.08.18</span>
+            <span class="timeline-dot">●</span>
+            <span class="timeline-text">两周年</span>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-date">2024.08.18</span>
+            <span class="timeline-dot">●</span>
+            <span class="timeline-text">三周年</span>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-date">2025.08.18</span>
+            <span class="timeline-dot">●</span>
+            <span class="timeline-text">四周年</span>
+        </div>
+        <div class="timeline-item future">
+            <span class="timeline-date">2026.08.18</span>
+            <span class="timeline-dot">●</span>
+            <span class="timeline-text">五周年</span>
+        </div>
+    </div>
 </div>
+
+<!-- 左下角音乐控制按钮 -->
+<div class="music-toggle-btn" id="music-toggle">
+    <span class="music-icon">🔇</span>
+</div>
+
+<!-- 背景音乐 -->
+<audio id="bg-music" loop>
+    <source src="/music/love-theme.mp3" type="audio/mp3">
+</audio>
+
+<style>
+/* 简洁样式 */
+.story-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.story-header h1 {
+    color: #e84393;
+    font-size: 2.2em;
+    margin-bottom: 10px;
+}
+
+.story-header p {
+    color: #666;
+    font-size: 1.1em;
+}
+
+/* 爱情计时器 */
+.love-timer {
+    background: linear-gradient(135deg, #ff6b6b, #e84393);
+    padding: 25px;
+    border-radius: 20px;
+    margin: 25px 0;
+    color: white;
+    text-align: center;
+}
+
+.timer-main {
+    margin-bottom: 15px;
+}
+
+.timer-big {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.timer-big span {
+    font-size: 1.5em;
+    margin: 0 5px;
+}
+
+.timer-small {
+    font-size: 1.5em;
+    font-family: 'Courier New', monospace;
+}
+
+.timer-small span {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 0 2px;
+}
+
+.total-days {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+/* 简洁时间线 */
+.simple-timeline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-date {
+    font-size: 0.9em;
+    color: #e84393;
+    font-weight: 500;
+}
+
+.timeline-dot {
+    color: #e84393;
+    font-size: 1.2em;
+}
+
+.timeline-text {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.timeline-item.future .timeline-date,
+.timeline-item.future .timeline-dot {
+    color: #4facfe;
+}
+
+/* 左下角音乐控制按钮 */
+.music-toggle-btn {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.music-toggle-btn:hover {
+    transform: scale(1.1);
+}
+
+.music-icon {
+    font-size: 1.5em;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .timer-big {
+        font-size: 1.6em;
+    }
+    
+    .timer-big span {
+        font-size: 1.3em;
+    }
+    
+    .timer-small {
+        font-size: 1.2em;
+    }
+    
+    .simple-timeline {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .timeline-item {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .music-toggle-btn {
+        left: 15px;
+        bottom: 15px;
+        width: 45px;
+        height: 45px;
+    }
+}
+</style>
+
+<script>
+// 修复的计时器功能
+(function() {
+    const startDate = new Date('2021-08-18T00:00:00');
+    let audioElement = null;
+    let isMusicPlaying = false;
+    
+    function initLoveTimer() {
+        // 初始化时间显示
+        updateTimer();
+        // 每秒更新一次时间
+        setInterval(updateTimer, 1000);
+        
+        // 设置音乐控制
+        setupMusicControl();
+        
+        // 尝试自动播放音乐
+        tryAutoPlayMusic();
+    }
+    
+    function updateTimer() {
+        const now = new Date();
+        const diff = now - startDate;
+        
+        // 计算总天数
+        const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+        
+        // 计算年、月、日（准确的计算）
+        const startYear = startDate.getFullYear();
+        const currentYear = now.getFullYear();
+        let years = currentYear - startYear;
+        
+        // 调整年数（如果今年还没到8月18日）
+        if (now.getMonth() < 7 || (now.getMonth() === 7 && now.getDate() < 18)) {
+            years--;
+        }
+        
+        // 计算月份（从最后一个周年纪念日到现在）
+        const lastAnniversary = new Date(currentYear, 7, 18); // 8月（月份从0开始）
+        if (now < lastAnniversary) {
+            lastAnniversary.setFullYear(currentYear - 1);
+        }
+        
+        const monthDiff = (now.getFullYear() - lastAnniversary.getFullYear()) * 12 + 
+                         (now.getMonth() - lastAnniversary.getMonth());
+        const months = monthDiff % 12;
+        
+        // 计算天数（从当月开始）
+        const days = now.getDate() - 18;
+        const adjustedDays = days >= 0 ? days : 30 + days; // 处理负数
+        
+        // 更新显示
+        document.getElementById('love-years').textContent = years;
+        document.getElementById('love-months').textContent = months;
+        document.getElementById('love-days').textContent = adjustedDays;
+        document.getElementById('total-days').textContent = totalDays;
+        
+        // 更新时分秒（实时）
+        document.getElementById('love-hours').textContent = now.getHours().toString().padStart(2, '0');
+        document.getElementById('love-minutes').textContent = now.getMinutes().toString().padStart(2, '0');
+        document.getElementById('love-seconds').textContent = now.getSeconds().toString().padStart(2, '0');
+    }
+    
+    function setupMusicControl() {
+        audioElement = document.getElementById('bg-music');
+        const toggleBtn = document.getElementById('music-toggle');
+        
+        if (!audioElement || !toggleBtn) return;
+        
+        // 设置默认音量
+        audioElement.volume = 0.4;
+        
+        // 音乐切换按钮
+        toggleBtn.addEventListener('click', function() {
+            if (isMusicPlaying) {
+                audioElement.pause();
+                isMusicPlaying = false;
+                toggleBtn.innerHTML = '<span class="music-icon">🔇</span>';
+            } else {
+                audioElement.play().then(() => {
+                    isMusicPlaying = true;
+                    toggleBtn.innerHTML = '<span class="music-icon">🔊</span>';
+                }).catch((error) => {
+                    console.error('播放失败:', error);
+                    toggleBtn.innerHTML = '<span class="music-icon">❌</span>';
+                });
+            }
+        });
+        
+        // 监听音乐结束和错误
+        audioElement.addEventListener('ended', function() {
+            isMusicPlaying = false;
+            toggleBtn.innerHTML = '<span class="music-icon">🔇</span>';
+        });
+        
+        audioElement.addEventListener('error', function() {
+            isMusicPlaying = false;
+            toggleBtn.innerHTML = '<span class="music-icon">❌</span>';
+        });
+    }
+    
+    function tryAutoPlayMusic() {
+        // 现代浏览器需要用户交互后才能自动播放
+        // 我们先静音尝试播放，等用户交互后再取消静音
+        if (audioElement) {
+            audioElement.muted = true;
+            audioElement.play().then(() => {
+                // 播放成功，设置标志位但保持静音
+                isMusicPlaying = true;
+                document.getElementById('music-toggle').innerHTML = '<span class="music-icon">🔇</span>';
+            }).catch(() => {
+                // 自动播放失败是正常的
+                isMusicPlaying = false;
+            });
+        }
+    }
+    
+    // 用户交互后取消静音
+    function enableSound() {
+        if (audioElement && isMusicPlaying) {
+            audioElement.muted = false;
+            document.getElementById('music-toggle').innerHTML = '<span class="music-icon">🔊</span>';
+        }
+    }
+    
+    // 监听用户交互
+    document.addEventListener('click', enableSound);
+    document.addEventListener('touchstart', enableSound);
+    
+    // 页面加载时初始化
+    document.addEventListener('DOMContentLoaded', initLoveTimer);
+})();
+</script>

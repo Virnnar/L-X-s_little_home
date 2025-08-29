@@ -1,0 +1,299 @@
+<div class="container">
+    <h2>💖 我们的爱情数据年报 💖</h2>
+    <p class="subtitle">从2023年8月18日到现在的温暖积累</p>
+    
+    <!-- 主要数据卡片 -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">📅</div>
+            <div class="stat-content">
+                <div class="stat-number" id="days-together">0</div>
+                <div class="stat-label">相伴天数</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">📞</div>
+            <div class="stat-content">
+                <div class="stat-number" id="total-call-hours">0</div>
+                <div class="stat-label">累计通话</div>
+                <div class="stat-subtext" id="call-minutes">0分钟</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">📖</div>
+            <div class="stat-content">
+                <div class="stat-number" id="total-stories">0</div>
+                <div class="stat-label">故事总数</div>
+                <div class="stat-subtext">约0个/天</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 可视化图表 -->
+    <div class="charts-section">
+        <div class="chart-card">
+            <h3>📊 通话时长分布</h3>
+            <div class="chart-container">
+                <div class="donut-chart" id="call-chart">
+                    <div class="chart-center">
+                        <div class="chart-value" id="call-per-day">0</div>
+                        <div class="chart-label">分钟/天</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chart-card">
+            <h3>🎯 年度目标进度</h3>
+            <div class="progress-charts">
+                <div class="mini-progress">
+                    <div class="mini-label">通话目标</div>
+                    <div class="mini-progress-bar">
+                        <div class="mini-progress-fill" id="call-goal-progress"></div>
+                    </div>
+                    <div class="mini-value" id="call-goal-text">0/10000分钟</div>
+                </div>
+                
+                <div class="mini-progress">
+                    <div class="mini-label">故事目标</div>
+                    <div class="mini-progress-bar">
+                        <div class="mini-progress-fill" id="story-goal-progress"></div>
+                    </div>
+                    <div class="mini-value" id="story-goal-text">0/365个</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 里程碑成就 -->
+    <div class="milestones-section">
+        <h3>🏆 爱情里程碑</h3>
+        <div class="milestones-grid" id="milestones-container">
+            <!-- 里程碑将由JavaScript动态生成 -->
+        </div>
+    </div>
+    
+    <!-- 分享按钮 -->
+    <div class="share-section">
+        <button class="share-btn" id="share-btn">
+            <span class="share-icon">📤</span>
+            分享我们的爱情数据
+        </button>
+    </div>
+</div>
+
+<script>
+// 年度统计功能
+(function() {
+    console.log('📊 初始化年度统计功能...');
+    
+    // 配置数据 - 这里设置你们的总数据
+    const loveData = {
+        startDate: '2023-08-18', // 开始日期
+        totalCallMinutes: 12800, // 总通话分钟数 - 根据实际情况修改
+        totalStories: 285,       // 总讲故事数 - 根据实际情况修改
+        goals: {
+            callMinutes: 10000,  // 年度通话目标
+            stories: 365         // 年度故事目标
+        }
+    };
+
+    // 初始化
+    function initStats() {
+        calculateStats();
+        updateDisplay();
+        setupEventListeners();
+        checkMilestones();
+        console.log('✅ 年度统计功能初始化完成');
+    }
+
+    // 计算统计数据
+    function calculateStats() {
+        const startDate = new Date(loveData.startDate);
+        const today = new Date();
+        
+        // 计算总天数
+        const timeDiff = today - startDate;
+        loveData.totalDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + 1;
+        
+        // 计算日均数据
+        loveData.dailyCallMinutes = (loveData.totalCallMinutes / loveData.totalDays).toFixed(1);
+        loveData.dailyStories = (loveData.totalStories / loveData.totalDays).toFixed(1);
+        
+        // 计算目标进度
+        loveData.callGoalProgress = (loveData.totalCallMinutes / loveData.goals.callMinutes) * 100;
+        loveData.storyGoalProgress = (loveData.totalStories / loveData.goals.stories) * 100;
+        
+        // 转换为小时
+        loveData.totalCallHours = Math.floor(loveData.totalCallMinutes / 60);
+        loveData.remainingMinutes = loveData.totalCallMinutes % 60;
+    }
+
+    // 更新显示
+    function updateDisplay() {
+        // 更新主要数据
+        document.getElementById('days-together').textContent = loveData.totalDays;
+        document.getElementById('total-call-hours').textContent = loveData.totalCallHours;
+        document.getElementById('call-minutes').textContent = `${loveData.remainingMinutes}分钟`;
+        document.getElementById('total-stories').textContent = loveData.totalStories;
+        
+        // 更新图表数据
+        document.getElementById('call-per-day').textContent = loveData.dailyCallMinutes;
+        
+        // 更新进度条
+        updateProgressBars();
+        
+        // 更新目标文本
+        document.getElementById('call-goal-text').textContent = 
+            `${loveData.totalCallMinutes}/${loveData.goals.callMinutes}分钟`;
+        document.getElementById('story-goal-text').textContent = 
+            `${loveData.totalStories}/${loveData.goals.stories}个`;
+    }
+
+    // 更新进度条
+    function updateProgressBars() {
+        const callProgress = Math.min(loveData.callGoalProgress, 100);
+        const storyProgress = Math.min(loveData.storyGoalProgress, 100);
+        
+        document.getElementById('call-goal-progress').style.width = callProgress + '%';
+        document.getElementById('story-goal-progress').style.width = storyProgress + '%';
+        
+        // 更新环形图
+        updateDonutChart('call-chart', callProgress);
+    }
+
+    // 更新环形图
+    function updateDonutChart(chartId, progress) {
+        const chart = document.getElementById(chartId);
+        const degrees = (progress / 100) * 360;
+        
+        chart.style.background = `
+            conic-gradient(
+                #e84393 0deg ${degrees}deg,
+                #f0f0f0 ${degrees}deg 360deg
+            )
+        `;
+    }
+
+    // 检查里程碑
+    function checkMilestones() {
+        const milestones = [
+            {
+                achieved: loveData.totalDays >= 100,
+                icon: '🎉',
+                title: '百日相伴',
+                description: '一起度过100个日夜'
+            },
+            {
+                achieved: loveData.totalCallMinutes >= 10000,
+                icon: '📞',
+                title: '万分钟通话',
+                description: '累计通话超过10000分钟'
+            },
+            {
+                achieved: loveData.totalStories >= 100,
+                icon: '📖',
+                title: '百个故事',
+                description: '讲述了100个睡前故事'
+            },
+            {
+                achieved: loveData.totalDays >= 365,
+                icon: '⭐',
+                title: '周年纪念',
+                description: '相爱一周年'
+            },
+            {
+                achieved: loveData.dailyCallMinutes >= 60,
+                icon: '💝',
+                title: '每日一小时',
+                description: '平均每天通话超过1小时'
+            },
+            {
+                achieved: loveData.totalCallMinutes >= 20000,
+                icon: '🏆',
+                title: '两万分钟',
+                description: '累计通话超过20000分钟'
+            }
+        ];
+
+        displayMilestones(milestones);
+    }
+
+    // 显示里程碑
+    function displayMilestones(milestones) {
+        const container = document.getElementById('milestones-container');
+        const achievedMilestones = milestones.filter(m => m.achieved);
+        
+        if (achievedMilestones.length === 0) {
+            container.innerHTML = '<div class="empty-milestone">继续努力，即将达成第一个里程碑！</div>';
+            return;
+        }
+        
+        container.innerHTML = achievedMilestones.map(milestone => `
+            <div class="milestone-item">
+                <div class="milestone-icon">${milestone.icon}</div>
+                <div class="milestone-content">
+                    <div class="milestone-title">${milestone.title}</div>
+                    <div class="milestone-desc">${milestone.description}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // 设置事件监听
+    function setupEventListeners() {
+        // 分享按钮
+        document.getElementById('share-btn').addEventListener('click', shareStats);
+        
+        // 数据卡片点击动画
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.classList.add('card-pulse');
+                setTimeout(() => {
+                    this.classList.remove('card-pulse');
+                }, 600);
+            });
+        });
+    }
+
+    // 分享功能
+    function shareStats() {
+        const shareText = `💖 我们的爱情数据年报 💖
+        
+相伴天数: ${loveData.totalDays}天
+累计通话: ${loveData.totalCallHours}小时${loveData.remainingMinutes}分钟
+故事总数: ${loveData.totalStories}个
+日均通话: ${loveData.dailyCallMinutes}分钟/天
+
+从2023年8月18日到现在
+每一分钟都是爱的积累 💕`;
+
+        if (navigator.share) {
+            navigator.share({
+                title: '我们的爱情数据年报',
+                text: shareText
+            }).catch(() => {
+                copyToClipboard(shareText);
+            });
+        } else {
+            copyToClipboard(shareText);
+        }
+    }
+
+    // 复制到剪贴板
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert('📋 数据已复制到剪贴板！可以分享给TA了～');
+        }).catch(() => {
+            prompt('请手动复制以下内容分享：', text);
+        });
+    }
+
+    // DOM加载完成后初始化
+    document.addEventListener('DOMContentLoaded', initStats);
+
+    console.log('✅ 年度统计功能加载完成');
+})();
+</script>

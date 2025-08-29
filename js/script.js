@@ -7,7 +7,7 @@ const sectionsConfig = [
     { id: 'home', path: `${repoPath}/sections/home.html` },
     { id: 'story', path: `${repoPath}/sections/story.html` },
     { id: 'gallery', path: `${repoPath}/sections/gallery.html` },
-    { id: 'message', path: `${repoPath}/sections/message.html` }
+    { id: 'message', path: `${repoPath}/sections/message.html` },
 ];
 
 // 加载章节内容
